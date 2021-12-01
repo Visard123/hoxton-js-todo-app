@@ -36,6 +36,7 @@ body {
   }
   
   label {
+   
     font-size: 0.9rem;
  
   }
@@ -48,17 +49,20 @@ body {
   }
   
   button {
+
     border: none;
     background: none;
     color: #000000cc;
   }
   
   form.add-item {
+    padding-top: 10px;
     display: grid;
     grid-template-columns: 1fr 50px;
   }
   
   form .text-input {
+  
     border: solid 1px #00000030;
     border-radius: 5px;
     padding: 5px;

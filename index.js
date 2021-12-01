@@ -1,29 +1,26 @@
-// Finding main elements of page
 
-const addItemsbox=document.querySelector('.add-item')
-const toDoItems=document.querySelector('.todo-list')
-const CompletedItems=document.querySelector('.completed-list')
+const addTodoForm = document.querySelector(".add-item")
+const todoList = document.querySelector(".todo-list")
+const completedList = document.querySelector(".completed-list")
 
-
-// Creating state 
-state={
-  todos:[
-{
-  title:  'Go shopping',
-  completed: true
-
-},
-{
-    title:  'Work out',
-    completed: true 
-},
-{
-    title:  'See the doctor',
-    completed: true  
+const state = {
+    todos: [
+        {
+        title: "Buy milk",
+        completed: false
+    },
+    {
+        title: "Learn JS",
+        completed: true
+    },
+    {
+        title: "Sleep well",
+        completed: false
+    }
+],  
+        showCompleted: true
 }
-  ],
-  showCompleted: true,
-}
+
 
 
 const showCompletedCheckbox = document.querySelector('.show-completed-checkbox')
@@ -33,49 +30,47 @@ showCompletedCheckbox.addEventListener('click', function(){
 })
 
 
-// Creating function to make things work 
-function showCompletedTodo(){
- return state.todos.filter(function(todo){
-     return todo.completed
- })
 
 
+
+function getCompletedTodos() {
+    return state.todos.filter(function(todo) {
+            return todo.completed
+})
+}
+
+function getUncompletedTodos () {
+    return state.todos.filter(function(todo) {
+            return !todo.completed
+})
 }
 
 
-function showIncompletedTodo(){
-    return state.todos.filter(function(todo){
-        return !todo.completed
-    })
-   
-   
-   }
-   
+function toggleTodo (todo) {
+    todo.completed = !todo.completed
+}
 
-function addNewTodo (todo){
+function addTodo (todo) {
     state.todos.push(todo)
-
 }
- function toggleTodo(todo){
-todo.completed =!todo.completed
- }
- function deleteTodo(text){
-    return state.todos.filter(function(todo){
-        return todo.title !==text
+
+function deleteTodo (text) {    
+    state.todos = state.todos.filter(function(todo){  
+        return todo.title !== text
     })
- }
+}
 
- function editTodo(todo,newTitle){
-    const newTitle = prompt(`Insert item`)
-     todo.tile=newTitle
- }
+function editTodo (todo){
+    const newTitle = prompt(`Insert new title`)
+    todo.title = newTitle
+    render()
+}
 
-// Functions to render the page 
 
- function renderCompletedTodos(){
+function renderCompletedTodos(){
 
-    const completedTodos = showCompletedTodo()
-    CompletedItems.innerHTML = ""
+    const completedTodos = getCompletedTodos()
+    completedList.innerHTML = ""
 
     for (const todo of completedTodos){
 
@@ -96,14 +91,14 @@ todo.completed =!todo.completed
         </div>  
         `
 
-        const editButton = liEl.querySelector(".edit")
-        editButton.addEventListener("click", function(){
+        const editBtn = liEl.querySelector(".edit")
+        editBtn.addEventListener("click", function(){
             editTodo (todo)
             render()
         })
 
-        const deleteButton = liEl.querySelector('.delete')
-        deleteButton.addEventListener("click", function(){
+        const deleteBtn = liEl.querySelector('.delete')
+        deleteBtn.addEventListener("click", function(){
                 deleteTodo (todo.title)
                 render()
         })
@@ -116,13 +111,13 @@ todo.completed =!todo.completed
             render()
         })
 
-        CompletedItems.append(liEl)
+        completedList.append(liEl)
     }
 }
 function renderUncompletedTodos(){
  
-    const uncompletedTodos = showIncompletedTodo()
-    toDoItems.innerHTML = ""
+    const uncompletedTodos = getUncompletedTodos()
+    todoList.innerHTML = ""
 
     for (const todo of uncompletedTodos){
 
